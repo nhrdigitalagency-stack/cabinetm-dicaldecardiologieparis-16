@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Activity, HeartPulse, Moon, Stethoscope, Gauge } from 'lucide-react';
 
 export const EQUIPMENT_IMAGES = {
-  ecgHolter: '/src/assets/images/ecg_holter_device_1794470525624.jpg',
-  holterWearable: '/src/assets/images/holter_ecg_wearable_1794561605267.jpg',
-  echoDoppler: '/src/assets/images/echo_doppler_scanner_1794470527211.jpg',
-  etoProbe: '/src/assets/images/eto_transesophageal_probe_1794561607480.jpg',
-  vascularDoppler: '/src/assets/images/vascular_doppler_carotid_1794561608731.jpg',
-  mapa: '/src/assets/images/mapa_blood_pressure_1794470528253.jpg',
-  stressTest: '/src/assets/images/stress_test_ergometer_1794470530593.jpg',
-  polygraphy: '/src/assets/images/sleep_apnea_polygraphy_1794470532108.jpg',
-  hypertensionConsult: '/src/assets/images/hypertension_heart_consultation_1794561611506.jpg',
-  clinicInterior: '/src/assets/images/cardiology_clinic_interior_1794561610577.jpg',
+  ecgHolter: '/assets/images/ecg_holter_device_1794470525624.jpg',
+  holterWearable: '/assets/images/holter_ecg_wearable_1794561605267.jpg',
+  echoDoppler: '/assets/images/echo_doppler_scanner_1794470527211.jpg',
+  etoProbe: '/assets/images/eto_transesophageal_probe_1794561607480.jpg',
+  vascularDoppler: '/assets/images/vascular_doppler_carotid_1794561608731.jpg',
+  mapa: '/assets/images/mapa_blood_pressure_1794470528253.jpg',
+  stressTest: '/assets/images/stress_test_ergometer_1794470530593.jpg',
+  polygraphy: '/assets/images/sleep_apnea_polygraphy_1794470532108.jpg',
+  hypertensionConsult: '/assets/images/hypertension_heart_consultation_1794561611506.jpg',
+  clinicInterior: '/assets/images/cardiology_clinic_interior_1794561610577.jpg',
 };
 
 interface IllustrationProps {

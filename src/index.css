@@ -179,6 +179,40 @@
   transform-origin: left;
 }
 
+/* 7. Hover Micro-Interactions & Elevate Animations */
+.gear-spin-hover {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.gear-spin-hover:hover {
+  transform: rotate(90deg) scale(1.15);
+}
+
+.btn-hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -6px rgba(0, 82, 204, 0.28);
+}
+
+.btn-hover-lift:active {
+  transform: translateY(0);
+}
+
+.img-hover-zoom {
+  overflow: hidden;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.05);
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }

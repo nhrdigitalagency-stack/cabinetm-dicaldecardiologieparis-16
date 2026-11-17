@@ -18,6 +18,7 @@ import {
   Menu,
   X,
   Lock,
+  Settings,
   UserCheck,
   Award,
   PhoneCall,
@@ -467,7 +468,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => openBookingWithSubject()}
-                className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 xl:px-5 py-2.5 rounded-full bg-[#0052CC] hover:bg-[#061B49] text-white text-xs font-bold shadow-xs transition-all whitespace-nowrap shrink-0 cursor-pointer"
+                className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 xl:px-5 py-2.5 rounded-full bg-[#0052CC] hover:bg-[#061B49] text-white text-xs font-bold shadow-xs transition-all whitespace-nowrap shrink-0 cursor-pointer btn-hover-lift hover:scale-[1.03] active:scale-[0.97]"
               >
                 <Calendar className="w-4 h-4 shrink-0" />
                 <span className="hidden sm:inline">
@@ -713,7 +714,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => openBookingWithSubject()}
-                      className="w-full sm:w-auto px-6 py-4 rounded-full bg-[#0052CC] hover:bg-[#0041A3] text-white text-xs sm:text-sm font-bold shadow-lg flex items-center justify-center gap-2.5 transition-all cursor-pointer"
+                      className="w-full sm:w-auto px-6 py-4 rounded-full bg-[#0052CC] hover:bg-[#0041A3] text-white text-xs sm:text-sm font-bold shadow-lg flex items-center justify-center gap-2.5 btn-hover-lift hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                     >
                       <Calendar className="w-4 h-4 shrink-0" />
                       <span>
@@ -725,7 +726,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => navigateToPage('explorations')}
-                      className="w-full sm:w-auto px-6 py-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/25 text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 transition-all cursor-pointer"
+                      className="w-full sm:w-auto px-6 py-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/25 text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 btn-hover-lift hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                     >
                       <Stethoscope className="w-4 h-4 text-sky-300 shrink-0" />
                       <span>
@@ -2388,15 +2389,16 @@ export default function App() {
             </div>
           </div>
 
-          {/* Bottom Copyright & Admin Button — >= 48x48px touch target, positioned on the left away from Urgence */}
+          {/* Bottom Copyright & Gear Setting Button — Discreet Gear Wheel, without "Accès admin" text */}
           <div className="pt-6 sm:pr-48 flex flex-col sm:flex-row items-start sm:items-center justify-start gap-4 sm:gap-6 text-xs text-slate-400">
             <button
               type="button"
               onClick={() => setAdminModalOpen(true)}
-              className="min-h-[48px] min-w-[48px] px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shrink-0"
+              aria-label="Configuration"
+              title="Configuration"
+              className="w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-sky-400 border border-slate-800 hover:border-sky-500/40 inline-flex items-center justify-center transition-all duration-300 gear-spin-hover cursor-pointer shrink-0 shadow-sm"
             >
-              <Lock className="w-4 h-4 text-sky-400" />
-              <span>{lang === 'fr' ? 'Accès Admin' : 'Admin Portal'}</span>
+              <Settings className="w-5 h-5" />
             </button>
 
             <div className="leading-relaxed">

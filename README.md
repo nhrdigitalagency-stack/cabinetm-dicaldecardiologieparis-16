@@ -1,20 +1,53 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Cabinet Médical de Cardiologie Paris 16 — Dr Annick TCHAM
 
-# Run and deploy your AI Studio app
+Site web officiel du **Cabinet Médical de Cardiologie Paris 16**, dirigé par le **Dr Annick TCHAM**, Cardiologue à Bonapriso, Douala (Cameroun).
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/289fe0d7-9581-4164-b817-c241b4a52da3
+## 🏥 Présentation du Cabinet
 
-## Run Locally
+- **Spécialité :** Cardiologie générale et explorations cardiovasculaires avancées
+- **Localisation :** Bonapriso, Douala, Cameroun (Fin rue pavée de l’École publique de Bonapriso, groupe 1)
+- **Téléphone / WhatsApp :** [+237 693 44 78 10](tel:+237693447810)
+- **Email :** [cmc.annicktcham@gmail.com](mailto:cmc.annicktcham@gmail.com)
 
-**Prerequisites:**  Node.js
+---
 
+## 🛠️ Stack Technique
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- **Frontend :** React 19, TypeScript, Tailwind CSS, Motion, Lucide Icons
+- **Backend / Serveur :** Node.js Express, TypeScript (tsx)
+- **CMS Headless :** Sanity.io (synchronisation automatique du contenu du cabinet)
+- **Build Tool :** Vite 8
+
+---
+
+## 🚀 Démarrage Local
+
+### Prérequis
+- Node.js (v18+) ou Bun
+
+### Installation et lancement
+
+1. Installer les dépendances :
+   ```bash
+   npm install
+   ```
+
+2. Configurer les variables d'environnement (`.env`) :
+   ```env
+   SANITY_PROJECT_ID=l3036eyt
+   SANITY_DATASET=production
+   SANITY_API_TOKEN=votre_token_sanity
+   PORT=3000
+   ```
+
+3. Lancer en mode développement :
+   ```bash
+   npm run dev
+   ```
+
+4. Compiler pour la production :
+   ```bash
+   npm run build
+   ```

@@ -18,12 +18,9 @@ import {
   Menu,
   X,
   Lock,
-  Sparkles,
   UserCheck,
   Award,
   PhoneCall,
-  Cpu,
-  Zap,
   HeartHandshake,
   ChevronDown,
   ChevronUp,
@@ -325,11 +322,11 @@ export default function App() {
       case 'heart-handshake':
         return <HeartHandshake className="w-5 h-5" />;
       case 'cpu':
-        return <Cpu className="w-5 h-5" />;
+        return <Activity className="w-5 h-5" />;
       case 'phone-call':
         return <PhoneCall className="w-5 h-5" />;
       default:
-        return <Zap className="w-5 h-5" />;
+        return <ShieldCheck className="w-5 h-5" />;
     }
   };
 

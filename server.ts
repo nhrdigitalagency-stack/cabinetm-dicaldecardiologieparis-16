@@ -270,7 +270,7 @@ syncWithSanityOnBoot();
 app.get('/robots.txt', (_req: Request, res: Response) => {
   const appUrl =
     process.env.APP_URL ||
-    'https://ais-pre-er2k2ejusg6bnnkfz2j6yh-323022168140.europe-west2.run.app';
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cabinetm-dicaldecardiologieparis-16.vercel.app');
   res.type('text/plain').send(
     [
       'User-agent: *',
@@ -285,7 +285,7 @@ app.get('/robots.txt', (_req: Request, res: Response) => {
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
   const baseUrl = (
     process.env.APP_URL ||
-    'https://ais-pre-er2k2ejusg6bnnkfz2j6yh-323022168140.europe-west2.run.app'
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cabinetm-dicaldecardiologieparis-16.vercel.app')
   ).replace(/\/$/, '');
   const now = new Date().toISOString().split('T')[0];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

@@ -157,9 +157,8 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
     fr: "Il propose notamment le suivi de l'hypertension artérielle, des troubles du rythme cardiaque, de l'insuffisance cardiaque et le dépistage de l'apnée du sommeil.",
     en: 'It specifically offers continuous monitoring of hypertension, heart rhythm disorders, heart failure, and specialized sleep apnea screening.',
   },
-  logoUrl: '/assets/aistudio/Logo_de_cardiologie_moderne___Paris_16_65e1e514.png',
-  doctorPortraitUrl:
-    '/assets/aistudio/Portrait_professionnel_d_une_m_decin_africaine_itin_rante_4dbc2b99.png',
+  logoUrl: '/assets/branding/logo-paris16.png',
+  doctorPortraitUrl: '/assets/branding/dr-annick-tcham.png',
 
   explorations: [
     {

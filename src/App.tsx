@@ -118,18 +118,45 @@ export default function App() {
     }
 
     let mounted = true;
-    fetch('/api/site-data')
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (!mounted || !data) return;
-        if (data.siteData) setSiteData(data.siteData);
-        if (Array.isArray(data.testimonials) && data.testimonials.length > 0) {
-          setTestimonials(data.testimonials);
+    const loadSiteData = async () => {
+      try {
+        const res = await fetch('/api/site-data');
+        if (res.ok) {
+          const data = await res.json();
+          if (!mounted || !data) return;
+          if (data.siteData) setSiteData(data.siteData);
+          if (Array.isArray(data.testimonials) && data.testimonials.length > 0) {
+            setTestimonials(data.testimonials);
+          }
+          return;
         }
-      })
-      .catch((err) => {
-        console.error('Error fetching initial site data:', err);
-      });
+      } catch (e) {
+        console.warn('Backend /api/site-data unreachable, trying direct Sanity fallback:', e);
+      }
+
+      // Direct Sanity CDN fallback query (public read access)
+      try {
+        const query = encodeURIComponent(
+          '{ "config": *[_type == "clinicConfig" && _id == "clinic-config-paris16"][0], "testimonials": *[_type == "testimonial"] | order(createdAt desc) }'
+        );
+        const sanityRes = await fetch(
+          `https://l3036eyt.api.sanity.io/v2024-01-01/data/query/production?query=${query}`
+        );
+        if (sanityRes.ok && mounted) {
+          const sData = await sanityRes.json();
+          if (sData.result?.config?.payload) {
+            setSiteData(sData.result.config.payload);
+          }
+          if (Array.isArray(sData.result?.testimonials) && sData.result.testimonials.length > 0) {
+            setTestimonials(sData.result.testimonials);
+          }
+        }
+      } catch (err) {
+        console.error('Direct Sanity fallback error:', err);
+      }
+    };
+
+    loadSiteData();
     return () => {
       mounted = false;
     };

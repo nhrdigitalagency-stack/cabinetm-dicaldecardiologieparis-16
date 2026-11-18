@@ -9,6 +9,8 @@ export interface ExplorationItem {
   duration: { fr: string; en: string };
   preparation: { fr: string; en: string };
   sameDay: boolean;
+  resultTiming?: { fr: string; en: string };
+  badgeText?: { fr: string; en: string };
   illustrationType: string;
 }
 
@@ -154,8 +156,8 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
     en: 'The Paris 16 Cardiology Medical Practice, led by Dr Annick TCHAM, cardiologist, specializes in the management of cardiovascular diseases and comprehensive cardiological explorations.',
   },
   synthesisParagraph2: {
-    fr: "Il propose notamment le suivi de l'hypertension artérielle, des troubles du rythme cardiaque, de l'insuffisance cardiaque et le dépistage de l'apnée du sommeil.",
-    en: 'It specifically offers continuous monitoring of hypertension, heart rhythm disorders, heart failure, and specialized sleep apnea screening.',
+    fr: "Il propose notamment le suivi de l'hypertension artérielle, des troubles du rythme cardiaque, de l'insuffisance cardiaque, le dépistage de l'apnée du sommeil, ainsi que la réalisation de visites médicales systématiques d'entreprise et de campagnes ciblées de dépistage cardiovasculaire.",
+    en: 'It specifically offers continuous monitoring of hypertension, heart rhythm disorders, heart failure, specialized sleep apnea screening, as well as systematic corporate medical check-ups and targeted cardiovascular screening campaigns.',
   },
   logoUrl: '/assets/branding/logo-paris16.png',
   doctorPortraitUrl: '/assets/branding/dr-annick-tcham.png',
@@ -177,14 +179,22 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'The 12-lead electrocardiogram (ECG) is the baseline examination performed during your consultation. Painless and immediate, it detects rhythm disorders, conduction abnormalities, and signs of coronary ischemia.',
       },
       duration: {
-        fr: '10 minutes · Résultat immédiat',
-        en: '10 minutes · Immediate result',
+        fr: '10 minutes · Réalisation & résultat le jour même',
+        en: '10 minutes · Same-day execution & report',
       },
       preparation: {
         fr: 'Aucune préparation particulière requise.',
         en: 'No special preparation required.',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat Immédiat',
+        en: 'Immediate Result',
+      },
+      resultTiming: {
+        fr: 'Tracé et interprétation remis immédiatement en main propre lors de votre consultation le jour même.',
+        en: 'Tracing and detailed interpretation delivered immediately on the same day during your consultation.',
+      },
       illustrationType: 'ecg',
     },
     {
@@ -203,14 +213,22 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'A compact, lightweight recorder captures every heartbeat over 24 hours or more. It diagnoses intermittent palpitations, dizziness, or silent arrhythmias that may not appear during a brief resting ECG.',
       },
       duration: {
-        fr: 'Pose en 15 min · Enregistrement 24h',
-        en: '15 min fitting · 24h recording',
+        fr: 'Pose en 15 min · Enregistrement 24h à 72h',
+        en: '15 min fitting · 24h to 72h recording',
       },
       preparation: {
-        fr: 'Porter un vêtement ample. Prendre sa douche avant la pose du boîtier.',
-        en: 'Wear comfortable clothing. Shower prior to device placement.',
+        fr: 'Prendre sa douche avant la pose. Porter un vêtement ample.',
+        en: 'Shower prior to device placement. Wear comfortable, loose clothing.',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat à la Dépose',
+        en: 'Result at Device Return',
+      },
+      resultTiming: {
+        fr: 'Pose de l’appareil sur place le jour même. Le résultat complet et l’analyse du rythme vous sont remis le jour de la dépose de l’appareil (dès le lendemain lors de la restitution).',
+        en: 'Device is fitted on-site the same day. Complete rhythm report is delivered the day the device is returned (the next day upon return).',
+      },
       illustrationType: 'holter-ecg',
     },
     {
@@ -229,14 +247,22 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'ABPM automatically measures your blood pressure every 15 to 30 minutes throughout the day and night. It eliminates the “white-coat effect,” confirms hypertension diagnosis, and verifies 24-hour treatment efficacy.',
       },
       duration: {
-        fr: 'Pose en 15 min · Mesure sur 24h',
-        en: '15 min fitting · 24h monitoring',
+        fr: 'Pose en 15 min · Mesure tensionnelle sur 24h',
+        en: '15 min fitting · 24h blood pressure monitoring',
       },
       preparation: {
         fr: 'Porter des manches larges pour le brassard tensionnel.',
         en: 'Wear loose sleeves to accommodate the blood pressure cuff.',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat à la Dépose',
+        en: 'Result at Device Return',
+      },
+      resultTiming: {
+        fr: 'Pose de l’appareil sur place le jour même. Le bilan tensionnel complet (profil nycthéméral jour/nuit) vous est remis le jour de la dépose de l’appareil (dès le lendemain).',
+        en: 'Device is fitted on-site the same day. Detailed 24h blood pressure report is delivered the day the device is returned (the next day).',
+      },
       illustrationType: 'mapa',
     },
     {
@@ -263,6 +289,14 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'No special preparation needed. Fasting is not required.',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat Immédiat',
+        en: 'Immediate Result',
+      },
+      resultTiming: {
+        fr: 'Examen réalisé sur place · Compte-rendu médical complet et explications détaillées remis en main propre le jour même.',
+        en: 'On-site exam · Full medical report and detailed debrief delivered on the same day.',
+      },
       illustrationType: 'echo-doppler',
     },
     {
@@ -289,6 +323,14 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'Strict fasting (no food or liquids) for at least 6 hours prior to the exam.',
       },
       sameDay: false,
+      badgeText: {
+        fr: 'Sur Programmation',
+        en: 'Scheduled Procedure',
+      },
+      resultTiming: {
+        fr: 'Examen réalisé sur programmation dédiée avec remise du compte-rendu le jour de l’examen.',
+        en: 'Scheduled procedure with medical report delivered the day of the exam.',
+      },
       illustrationType: 'eto',
     },
     {
@@ -315,6 +357,14 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'No preparation required (fasting only if abdominal aorta Doppler is scheduled).',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat Immédiat',
+        en: 'Immediate Result',
+      },
+      resultTiming: {
+        fr: 'Examen réalisé sur place · Compte-rendu et clichés remis en main propre le jour même.',
+        en: 'On-site exam · Full report and imaging delivered on the same day.',
+      },
       illustrationType: 'vascular',
     },
     {
@@ -341,6 +391,14 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'Bring comfortable sportswear and sneakers. Eat a light meal beforehand.',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat Immédiat',
+        en: 'Immediate Result',
+      },
+      resultTiming: {
+        fr: 'Interprétation cardiologique immédiate et conclusions d’aptitude remises après la phase de récupération.',
+        en: 'Immediate cardiological debrief and fitness-to-exercise conclusions delivered post-recovery.',
+      },
       illustrationType: 'stress-test',
     },
     {
@@ -367,6 +425,14 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
         en: 'Bring a comfortable cotton T-shirt for sensor fitting.',
       },
       sameDay: true,
+      badgeText: {
+        fr: 'Résultat à la Dépose',
+        en: 'Result at Device Return',
+      },
+      resultTiming: {
+        fr: 'Pose du dispositif au cabinet le jour même. Le compte-rendu complet (index d’apnées, désaturations, tracé respiratoire) vous est remis le jour de la dépose de l’appareil (dès le lendemain lors de la restitution).',
+        en: 'Device is fitted on-site the same day. Complete sleep apnea report is delivered the day the device is returned (the next day upon return).',
+      },
       illustrationType: 'polygraphy',
     },
   ],
@@ -637,6 +703,22 @@ export const INITIAL_CLINIC_DATA: ClinicSiteData = {
       description: {
         fr: 'Rendez-vous rapide, même en urgence, pour une prise en charge précoce et sécurisée de vos symptômes cardiovasculaires.',
         en: 'Fast appointment scheduling, including urgent consultations, ensuring early and safe management of your cardiovascular symptoms.',
+      },
+    },
+    {
+      id: 'visites-systematiques-depistage',
+      iconName: 'building-shield',
+      title: {
+        fr: 'Visites Systématiques & Dépistages',
+        en: 'Corporate Check-ups & Screenings',
+      },
+      subtitle: {
+        fr: 'Santé d’entreprise & prévention active',
+        en: 'Occupational health & prevention',
+      },
+      description: {
+        fr: 'Visites médicales systématiques annuelles pour entreprises et institutions (bilans cadres et personnel, aptitude cardiologique) et organisation de campagnes de dépistage (HTA, risque cardiovasculaire, apnée du sommeil).',
+        en: 'Annual systematic medical check-ups for corporations (executive fitness-to-work, employee heart health) and organized screening campaigns (hypertension, cardiovascular risk, sleep apnea).',
       },
     },
   ],

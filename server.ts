@@ -272,7 +272,7 @@ app.get('/robots.txt', (_req: Request, res: Response) => {
   if (fs.existsSync(robotsPath)) {
     res.type('text/plain').sendFile(robotsPath);
   } else {
-    res.type('text/plain').send('User-agent: *\nAllow: /\nDisallow: /api/admin/\nSitemap: https://cabinetm-dicaldecardiologieparis-16.vercel.app/sitemap.xml\n');
+    res.type('text/plain').send('User-agent: *\nAllow: /\nDisallow: /api/admin/\nSitemap: https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/sitemap.xml\n');
   }
 });
 

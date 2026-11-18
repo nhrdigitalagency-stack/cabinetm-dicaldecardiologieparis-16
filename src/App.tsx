@@ -30,6 +30,9 @@ import {
   User,
   FileText,
   AlertCircle,
+  Building2,
+  Users,
+  MessageCircle,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -500,6 +503,8 @@ export default function App() {
         return <Activity className="w-5 h-5" />;
       case 'phone-call':
         return <PhoneCall className="w-5 h-5" />;
+      case 'building-shield':
+        return <Building2 className="w-5 h-5" />;
       default:
         return <ShieldCheck className="w-5 h-5" />;
     }
@@ -1429,10 +1434,10 @@ export default function App() {
                     ? 'Plateau Technique & 8 Explorations Sur Place'
                     : 'Diagnostic Platform & 8 On-Site Explorations'}
                 </h2>
-                <p className="text-sm sm:text-base text-slate-600 mt-1.5 max-w-2xl">
+                <p className="text-sm sm:text-base text-slate-600 mt-1.5 max-w-3xl leading-relaxed">
                   {lang === 'fr'
-                    ? 'Survolez ou cliquez sur les points interactifs (i) de chaque équipement pour afficher la durée, la préparation et la disponibilité le jour même.'
-                    : 'Hover or click the interactive hotspots (i) on each unit to reveal duration, preparation, and same-day availability.'}
+                    ? 'Examens réalisés sur place le jour même sans délai d’attente. Pour les examens directs (ECG, Échocardiographie Doppler, Épreuve d’effort, Doppler vasculaire), résultats remis le jour même. Pour les enregistrements continus (Holter ECG, MAPA, Polygraphie de l’apnée du sommeil), pose le jour même et résultat remis le jour de la dépose de l’appareil.'
+                    : 'Examinations performed on-site the same day without delay. Direct tests (ECG, Doppler Echo, Stress Test, Vascular Doppler) have same-day reports. Continuous monitoring devices (Holter ECG, ABPM, Sleep Polygraphy) are fitted same day, with results delivered on device return.'}
                 </p>
               </div>
             </div>
@@ -1458,8 +1463,26 @@ export default function App() {
                         />
 
                         {/* Floating Tech Label */}
-                        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-slate-900/80 backdrop-blur-xs text-white text-[11px] font-mono font-bold shadow-xs">
-                          #{exp.number} · {exp.sameDay ? (lang === 'fr' ? 'Même Jour' : 'Same Day') : 'Sur RDV'}
+                        <div
+                          className={`absolute top-3 left-3 px-2.5 py-1 rounded-lg backdrop-blur-md text-white text-[11px] font-mono font-bold shadow-xs flex items-center gap-1.5 ${
+                            exp.badgeText?.fr.includes('Dépose')
+                              ? 'bg-amber-950/85 border border-amber-500/40 text-amber-200'
+                              : exp.sameDay
+                                ? 'bg-slate-900/85 border border-slate-700/60 text-white'
+                                : 'bg-indigo-950/85 border border-indigo-500/40 text-indigo-200'
+                          }`}
+                        >
+                          <span>#{exp.number}</span>
+                          <span className="opacity-40">·</span>
+                          <span>
+                            {exp.badgeText
+                              ? exp.badgeText[lang]
+                              : exp.sameDay
+                                ? lang === 'fr'
+                                  ? 'Même Jour'
+                                  : 'Same Day'
+                                : 'Sur RDV'}
+                          </span>
                         </div>
 
                         {/* Interactive Hotspot Button */}
@@ -1486,19 +1509,56 @@ export default function App() {
                           onClick={() =>
                             setSelectedClinicalItem({ kind: 'exploration', item: exp })
                           }
-                          className="cursor-pointer"
+                          className="cursor-pointer space-y-1.5"
                         >
                           <h3 className="text-base font-extrabold text-[#0F172A] group-hover:text-[#0052CC] transition-colors">
                             {exp.title[lang]}
                           </h3>
-                          <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                             {exp.shortDesc[lang]}
                           </p>
+
+                          {/* Explicit Result Timing Indicator */}
+                          <div className="pt-1.5">
+                            {exp.badgeText?.fr.includes('Dépose') ? (
+                              <div className="w-full p-2.5 rounded-xl bg-amber-50/90 border border-amber-200/90 flex items-start gap-2 text-left">
+                                <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                                <div className="text-[11px] leading-snug">
+                                  <span className="font-bold text-amber-950 block">
+                                    {lang === 'fr'
+                                      ? 'Pose le jour même au cabinet'
+                                      : 'Same-day on-site fitting'}
+                                  </span>
+                                  <span className="text-amber-800 font-medium">
+                                    {lang === 'fr'
+                                      ? 'Résultat le jour de la dépose de l’appareil'
+                                      : 'Results upon device return (next day)'}
+                                  </span>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="w-full p-2.5 rounded-xl bg-emerald-50/90 border border-emerald-200/90 flex items-start gap-2 text-left">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                                <div className="text-[11px] leading-snug">
+                                  <span className="font-bold text-emerald-950 block">
+                                    {lang === 'fr'
+                                      ? 'Examen réalisé sur place'
+                                      : 'Performed on-site'}
+                                  </span>
+                                  <span className="text-emerald-800 font-medium">
+                                    {lang === 'fr'
+                                      ? 'Résultat & compte-rendu le jour même'
+                                      : 'Immediate report on the same day'}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         {/* Expandable Technical Specs Box — Clean Slate Surface */}
                         {isHotspotOpen && (
-                          <div className="bg-slate-50 text-[#0F172A] p-3.5 rounded-2xl text-xs border border-slate-200 space-y-1.5">
+                          <div className="bg-slate-50 text-[#0F172A] p-3.5 rounded-2xl text-xs border border-slate-200 space-y-2">
                             <div className="font-bold text-[#0052CC] flex items-center gap-1.5">
                               <Clock className="w-3.5 h-3.5 text-[#0052CC] shrink-0" />
                               <span>{exp.duration[lang]}</span>
@@ -1506,6 +1566,14 @@ export default function App() {
                             <p className="text-[11px] text-slate-600 leading-relaxed">
                               {exp.preparation[lang]}
                             </p>
+                            {exp.resultTiming && (
+                              <div className="pt-2 border-t border-slate-200/80 text-[11px] text-slate-700">
+                                <strong className="text-[#0052CC] block mb-0.5">
+                                  {lang === 'fr' ? 'Remise du résultat :' : 'Result delivery:'}
+                                </strong>
+                                {exp.resultTiming[lang]}
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -1572,6 +1640,65 @@ export default function App() {
                 </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Corporate & Community Screening Banner: Visites Systématiques & Dépistages */}
+            <div className="rounded-3xl bg-gradient-to-r from-[#061B49] via-[#0052CC] to-[#0A2540] border border-blue-400/30 p-6 sm:p-9 text-white shadow-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              <div className="flex items-start gap-4">
+                <div className="w-13 h-13 rounded-2xl bg-white/10 border border-white/20 text-white flex items-center justify-center shrink-0">
+                  <Building2 className="w-6 h-6 text-sky-200" />
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/15 text-[10.5px] font-mono font-bold uppercase tracking-wider text-sky-200">
+                    <span>
+                      {lang === 'fr'
+                        ? 'SANTÉ AU TRAVAIL & ENTREPRISES · DOUALA & CAMEROUN'
+                        : 'OCCUPATIONAL HEALTH & CORPORATE · CAMEROON'}
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-2xl font-extrabold mt-1 text-white">
+                    {lang === 'fr'
+                      ? 'Visites Médicales Systématiques & Campagnes de Dépistage'
+                      : 'Corporate Systematic Check-ups & Screening Campaigns'}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-blue-100 mt-1.5 max-w-3xl leading-relaxed">
+                    {lang === 'fr'
+                      ? 'Le cabinet accompagne les entreprises, institutions et collectivités pour les bilans annuels systématiques des salariés et cadres (aptitude cardiologique, prévention des AVC) et organise des campagnes ciblées de dépistage en milieu professionnel (hypertension artérielle, risque cardiovasculaire, apnée du sommeil).'
+                      : 'We support businesses and organizations with annual systematic medical check-ups for employees and executives (fitness-to-work cardiology, stroke prevention) and organize custom on-site screening campaigns (hypertension, cardiovascular risk, sleep apnea).'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full lg:w-auto">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openBookingWithSubject(
+                      lang === 'fr'
+                        ? 'Visite Systématique & Bilan de Santé d’Entreprise'
+                        : 'Corporate Systematic Health Check-up'
+                    )
+                  }
+                  className="px-5 py-3 rounded-full bg-white hover:bg-slate-100 text-[#0052CC] text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 whitespace-nowrap shadow-md transition-all cursor-pointer"
+                >
+                  <Building2 className="w-4 h-4 text-[#0052CC]" />
+                  <span>{lang === 'fr' ? 'Bilan Entreprise' : 'Corporate Checkup'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    openBookingWithSubject(
+                      lang === 'fr'
+                        ? 'Campagne de Dépistage Cardiovasculaire (Entreprise / Collectivité)'
+                        : 'Cardiovascular Screening Campaign'
+                    )
+                  }
+                  className="px-5 py-3 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/30 text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 whitespace-nowrap transition-all cursor-pointer"
+                >
+                  <Users className="w-4 h-4 text-sky-200" />
+                  <span>{lang === 'fr' ? 'Campagne Dépistage' : 'Screening Campaign'}</span>
+                </button>
+              </div>
             </div>
           </section>
         )}
@@ -2130,15 +2257,29 @@ export default function App() {
 
                       <div>
                         <label className="block text-xs font-bold text-[#061B49] mb-1">
-                          {lang === 'fr' ? 'Créneau' : 'Time Slot'}
+                          {lang === 'fr' ? 'Heure / Créneau souhaité *' : 'Preferred Time / Slot *'}
                         </label>
                         <select
                           value={inlineTime}
                           onChange={(e) => setInlineTime(e.target.value)}
                           className="w-full px-3 py-2.5 rounded-xl bg-[#F4F8FD] border border-slate-200 text-xs font-semibold text-[#061B49] focus:outline-none focus:border-[#0052CC]"
                         >
-                          <option value="Matin (08h00 - 12h30)">
-                            {lang === 'fr' ? 'Matin (08h00 - 12h30)' : 'Morning (08:00 - 12:30)'}
+                          <option value="08h30">08h30 (Matin)</option>
+                          <option value="09h00">09h00 (Matin)</option>
+                          <option value="09h30">09h30 (Matin)</option>
+                          <option value="10h00">10h00 (Matin)</option>
+                          <option value="10h30">10h30 (Matin)</option>
+                          <option value="11h00">11h00 (Matin)</option>
+                          <option value="11h30">11h30 (Matin)</option>
+                          <option value="14h00">14h00 (Après-midi)</option>
+                          <option value="14h30">14h30 (Après-midi)</option>
+                          <option value="15h00">15h00 (Après-midi)</option>
+                          <option value="15h30">15h30 (Après-midi)</option>
+                          <option value="16h00">16h00 (Après-midi)</option>
+                          <option value="16h30">16h30 (Après-midi)</option>
+                          <option value="17h00">17h00 (Après-midi)</option>
+                          <option value="Matinée (08h00 - 12h30)">
+                            {lang === 'fr' ? 'Matinée (08h00 - 12h30)' : 'Morning (08:00 - 12:30)'}
                           </option>
                           <option value="Après-midi (13h30 - 18h00)">
                             {lang === 'fr'
@@ -2167,6 +2308,16 @@ export default function App() {
                           {lang === 'fr'
                             ? 'Bilan Cardiologique Complet (Consultation + ECG + Écho sur place)'
                             : 'Complete Cardiology Workup (Consultation + On-site ECG + Echo)'}
+                        </option>
+                        <option value="Visite Systématique & Bilan de Santé d’Entreprise">
+                          {lang === 'fr'
+                            ? 'Visite Systématique & Bilan de Santé d’Entreprise (Médecine du Travail)'
+                            : 'Corporate Systematic Health Check-up (Occupational Health)'}
+                        </option>
+                        <option value="Campagne de Dépistage Cardiovasculaire (Entreprise / Collectivité)">
+                          {lang === 'fr'
+                            ? 'Campagne de Dépistage Cardiovasculaire (Entreprise / Collectivité)'
+                            : 'Cardiovascular Screening Campaign (Corporate / Community)'}
                         </option>
                         <option value="Dépistage Apnée du Sommeil (Polygraphie ventilatoire)">
                           {lang === 'fr'
@@ -2250,6 +2401,32 @@ export default function App() {
                             : 'Confirm My Clinic Appointment'}
                       </span>
                     </button>
+
+                    <div className="flex items-center gap-2 pt-1">
+                      <div className="h-px bg-slate-200 flex-1" />
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                        {lang === 'fr' ? 'OU' : 'OR'}
+                      </span>
+                      <div className="h-px bg-slate-200 flex-1" />
+                    </div>
+
+                    <a
+                      href={`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(
+                        lang === 'fr'
+                          ? `Bonjour Dr Annick TCHAM (Cabinet Médical de Cardiologie Paris 16), je souhaite prendre rendez-vous.\nNom : ${inlineName || '...'}\nMotif : ${inlineService}\nDate souhaitée : ${inlineDate || '...'}\nHeure souhaitée : ${inlineTime || '...'}${inlineNotes ? `\nPrécisions : ${inlineNotes}` : ''}${inlineUrgent ? '\nURGENCE : Oui' : ''}`
+                          : `Hello Dr Annick TCHAM (Paris 16 Cardiology Medical Practice), I would like to book an appointment.\nName: ${inlineName || '...'}\nReason: ${inlineService}\nPreferred Date: ${inlineDate || '...'}\nPreferred Time: ${inlineTime || '...'}${inlineNotes ? `\nNotes: ${inlineNotes}` : ''}${inlineUrgent ? '\nURGENT: Yes' : ''}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-extrabold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <MessageCircle className="w-4 h-4 text-emerald-200" />
+                      <span>
+                        {lang === 'fr'
+                          ? 'Réserver Directement par WhatsApp'
+                          : 'Book Directly via WhatsApp'}
+                      </span>
+                    </a>
                   </form>
                 </div>
               </div>

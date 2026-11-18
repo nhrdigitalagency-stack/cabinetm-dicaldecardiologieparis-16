@@ -56,6 +56,12 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
     lang === 'fr'
       ? 'Dépistage Apnée du Sommeil (Polygraphie ventilatoire)'
       : 'Sleep Apnea Screening (Respiratory Polygraphy)',
+    lang === 'fr'
+      ? 'Visite Systématique & Bilan de Santé d’Entreprise'
+      : 'Corporate Systematic Health Check-up',
+    lang === 'fr'
+      ? 'Campagne de Dépistage Cardiovasculaire (Entreprise / Collectivité)'
+      : 'Cardiovascular Screening Campaign (Corporate / Community)',
     ...siteData.explorations.map((e) => `${lang === 'fr' ? 'Examen' : 'Exam'} : ${e.title[lang]}`),
     ...siteData.pathologies.map((p) => `${lang === 'fr' ? 'Suivi' : 'Care'} : ${p.title[lang]}`),
   ];
@@ -109,8 +115,8 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const whatsappDirectUrl = `https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(
     lang === 'fr'
-      ? `Bonjour Dr Annick TCHAM (Cabinet Médical de Cardiologie Paris 16), je souhaite prendre rendez-vous.\nNom : ${patientName || '...'}\nMotif : ${explorationOrPathology}\nDate souhaitée : ${preferredDate || '...'}`
-      : `Hello Dr Annick TCHAM (Paris 16 Cardiology Medical Practice), I would like to book an appointment.\nName: ${patientName || '...'}\nReason: ${explorationOrPathology}\nPreferred Date: ${preferredDate || '...'}`
+      ? `Bonjour Dr Annick TCHAM (Cabinet Médical de Cardiologie Paris 16), je souhaite prendre rendez-vous.\nNom : ${patientName || '...'}\nMotif : ${explorationOrPathology}\nDate souhaitée : ${preferredDate || '...'}\nHeure souhaitée : ${preferredTime || '...'}${notes ? `\nPrécisions : ${notes}` : ''}${isUrgent ? '\nURGENCE : Oui' : ''}`
+      : `Hello Dr Annick TCHAM (Paris 16 Cardiology Medical Practice), I would like to book an appointment.\nName: ${patientName || '...'}\nReason: ${explorationOrPathology}\nPreferred Date: ${preferredDate || '...'}\nPreferred Time: ${preferredTime || '...'}${notes ? `\nNotes: ${notes}` : ''}${isUrgent ? '\nURGENT: Yes' : ''}`
   )}`;
 
   return (
@@ -294,8 +300,22 @@ export const AppointmentModal: React.FC<AppointmentModalProps> = ({
                       onChange={(e) => setPreferredTime(e.target.value)}
                       className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#F4F8FD] border border-slate-200 text-xs font-semibold text-[#061B49] focus:outline-none focus:border-[#0052CC]"
                     >
-                      <option value="Matin (08h00 - 12h30)">
-                        {lang === 'fr' ? 'Matin (08h00 - 12h30)' : 'Morning (08:00 - 12:30)'}
+                      <option value="08h30">08h30 (Matin)</option>
+                      <option value="09h00">09h00 (Matin)</option>
+                      <option value="09h30">09h30 (Matin)</option>
+                      <option value="10h00">10h00 (Matin)</option>
+                      <option value="10h30">10h30 (Matin)</option>
+                      <option value="11h00">11h00 (Matin)</option>
+                      <option value="11h30">11h30 (Matin)</option>
+                      <option value="14h00">14h00 (Après-midi)</option>
+                      <option value="14h30">14h30 (Après-midi)</option>
+                      <option value="15h00">15h00 (Après-midi)</option>
+                      <option value="15h30">15h30 (Après-midi)</option>
+                      <option value="16h00">16h00 (Après-midi)</option>
+                      <option value="16h30">16h30 (Après-midi)</option>
+                      <option value="17h00">17h00 (Après-midi)</option>
+                      <option value="Matinée (08h00 - 12h30)">
+                        {lang === 'fr' ? 'Matinée (08h00 - 12h30)' : 'Morning (08:00 - 12:30)'}
                       </option>
                       <option value="Après-midi (13h30 - 18h00)">
                         {lang === 'fr' ? 'Après-midi (13h30 - 18h00)' : 'Afternoon (13:30 - 18:00)'}

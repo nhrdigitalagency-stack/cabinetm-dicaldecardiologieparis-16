@@ -5,83 +5,83 @@
 
   <!-- 1. Page Accueil (/accueil) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/accueil</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/accueil</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/accueil" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/accueil" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/accueil" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/accueil" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/accueil" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/accueil" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/accueil" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/accueil" />
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/og-image.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/og-image.jpg</image:loc>
       <image:title>Cabinet Médical de Cardiologie Paris 16 — Dr Annick TCHAM Douala Bonapriso</image:title>
       <image:caption>Cabinet de cardiologie à Douala Bonapriso au Cameroun : consultations, ECG, échocardiographie Doppler, Holter, MAPA et apnée du sommeil.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/branding/logo-paris16.png</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/branding/logo-paris16.png</image:loc>
       <image:title>Logo Cabinet Médical de Cardiologie Paris 16</image:title>
     </image:image>
   </url>
 
   <!-- 2. Page À Propos (/a-propos) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/a-propos</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/a-propos</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/a-propos" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/a-propos" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/a-propos" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/a-propos" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/a-propos" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/a-propos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/a-propos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/a-propos" />
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/branding/dr-annick-tcham.png</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/branding/dr-annick-tcham.png</image:loc>
       <image:title>Dr Annick TCHAM — Médecin Cardiologue à Douala Cameroun</image:title>
       <image:caption>Portrait professionnel du Dr Annick TCHAM, cardiologue et directrice médicale du Cabinet de Cardiologie Paris 16 à Douala Bonapriso.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/cardiology_clinic_interior_1794561610577.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/cardiology_clinic_interior_1794561610577.jpg</image:loc>
       <image:title>Cabinet de Cardiologie Paris 16 Bonapriso — Salle de consultation et plateau technique</image:title>
     </image:image>
   </url>
 
   <!-- 3. Page Explorations Cardiologiques (/explorations) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/explorations</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/explorations</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/explorations" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/explorations" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/explorations" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/explorations" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/explorations" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/explorations" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/explorations" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/explorations" />
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/echo_doppler_scanner_1794470527211.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/echo_doppler_scanner_1794470527211.jpg</image:loc>
       <image:title>Échocardiographie Doppler couleur à Douala</image:title>
       <image:caption>Échocardiographe doppler de dernière génération pour l'exploration des valves, de la morphologie et de la fonction cardiaque.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/holter_ecg_wearable_1794561605267.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/holter_ecg_wearable_1794561605267.jpg</image:loc>
       <image:title>Holter ECG 24h à 72h Douala Cameroun</image:title>
       <image:caption>Enregistrement continu du rythme cardiaque pour dépister les arythmies, palpitations et syncopes.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/mapa_blood_pressure_1794470528253.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/mapa_blood_pressure_1794470528253.jpg</image:loc>
       <image:title>Holter tensionnel MAPA 24h Douala</image:title>
       <image:caption>Mesure Ambulatoire de la Pression Artérielle sur 24h pour diagnostiquer l'hypertension masquée ou résistante.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/sleep_apnea_polygraphy_1794470532108.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/sleep_apnea_polygraphy_1794470532108.jpg</image:loc>
       <image:title>Dépistage Apnée du Sommeil par Polygraphie Ventilatoire à Douala</image:title>
       <image:caption>Polygraphie ventilatoire nocturne à domicile pour dépister le syndrome d'apnées obstructives du sommeil.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/stress_test_ergometer_1794470530593.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/stress_test_ergometer_1794470530593.jpg</image:loc>
       <image:title>Épreuve d'effort cardiologique à Douala Bonapriso</image:title>
       <image:caption>Test d'effort sur cyclo-ergomètre avec surveillance ECG continue pour dépister l'ischémie myocardique.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/vascular_doppler_carotid_1794561608731.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/vascular_doppler_carotid_1794561608731.jpg</image:loc>
       <image:title>Écho-Doppler vasculaire artériel et veineux à Douala</image:title>
       <image:caption>Exploration des troncs supra-aortiques (carotides) et des vaisseaux des membres inférieurs.</image:caption>
     </image:image>
@@ -89,16 +89,16 @@
 
   <!-- 4. Page Pathologies & Spécialités (/pathologies) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/pathologies</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/pathologies</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/pathologies" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/pathologies" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/pathologies" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/pathologies" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/pathologies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/pathologies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/pathologies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/pathologies" />
     <image:image>
-      <image:loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/assets/images/hypertension_heart_consultation_1794561611506.jpg</image:loc>
+      <image:loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/assets/images/hypertension_heart_consultation_1794561611506.jpg</image:loc>
       <image:title>Consultation Hypertension Artérielle et Risque Cardiovasculaire Douala</image:title>
       <image:caption>Prise en charge de l'HTA, de l'insuffisance cardiaque, des arythmies et prévention des AVC au Cameroun.</image:caption>
     </image:image>
@@ -106,38 +106,38 @@
 
   <!-- 5. Page Cardiology Insights / Blog Santé (/actualites-sante) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/actualites-sante</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/actualites-sante</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/actualites-sante" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/actualites-sante" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/actualites-sante" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/actualites-sante" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/actualites-sante" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/actualites-sante" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/actualites-sante" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/actualites-sante" />
   </url>
 
   <!-- 6. Page Avis Patients (/avis-patients) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/avis-patients</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/avis-patients</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/avis-patients" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/avis-patients" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/avis-patients" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/avis-patients" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/avis-patients" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/avis-patients" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/avis-patients" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/avis-patients" />
   </url>
 
   <!-- 7. Page Contact & Plan d'Accès (/contact) -->
   <url>
-    <loc>https://cabinetm-dicaldecardiologieparis-16.vercel.app/contact</loc>
+    <loc>https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/contact</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/contact" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/contact" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16.vercel.app/contact" />
+    <xhtml:link rel="alternate" hreflang="fr-CM" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/contact" />
   </url>
 
 </urlset>

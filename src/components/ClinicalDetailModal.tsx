@@ -78,14 +78,16 @@ export const ClinicalDetailModal: React.FC<ClinicalDetailModalProps> = ({
                 <div className="text-xs font-bold uppercase tracking-wider text-[#0052CC] flex flex-wrap items-center gap-2">
                   <span>EXPLORATION CARDIOLOGIQUE #{selected.item.number}</span>
                   <span className="text-slate-300">·</span>
-                  <span className="text-slate-600">
-                    {selected.item.sameDay
-                      ? lang === 'fr'
-                        ? 'Réalisé sur place le même jour'
-                        : 'Performed on-site same day'
-                      : lang === 'fr'
-                        ? 'Sur programmation dédiée'
-                        : 'Scheduled procedure'}
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EBF3FC] text-[#0052CC] border border-[#0052CC]/20">
+                    {selected.item.badgeText
+                      ? selected.item.badgeText[lang]
+                      : selected.item.sameDay
+                        ? lang === 'fr'
+                          ? 'Même Jour'
+                          : 'Same Day'
+                        : lang === 'fr'
+                          ? 'Sur programmation'
+                          : 'Scheduled'}
                   </span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] mt-1">
@@ -101,7 +103,7 @@ export const ClinicalDetailModal: React.FC<ClinicalDetailModalProps> = ({
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
                   <div className="flex items-center gap-2 text-xs font-bold text-[#0052CC] mb-1">
                     <Clock className="w-4 h-4" />
-                    <span>{lang === 'fr' ? 'Durée & Compte-rendu' : 'Duration & Report'}</span>
+                    <span>{lang === 'fr' ? 'Durée & Réalisation' : 'Duration & Execution'}</span>
                   </div>
                   <p className="text-xs sm:text-sm font-semibold text-[#0F172A]">
                     {selected.item.duration[lang]}
@@ -118,6 +120,22 @@ export const ClinicalDetailModal: React.FC<ClinicalDetailModalProps> = ({
                   </p>
                 </div>
               </div>
+
+              {selected.item.resultTiming && (
+                <div className="p-4 rounded-2xl bg-[#F0F6FF] border border-[#0052CC]/25">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#0052CC] mb-1">
+                    <Calendar className="w-4 h-4 text-[#0052CC]" />
+                    <span>
+                      {lang === 'fr'
+                        ? 'Délai & Remise des Résultats'
+                        : 'Results & Delivery Timing'}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-[#0F172A] leading-relaxed">
+                    {selected.item.resultTiming[lang]}
+                  </p>
+                </div>
+              )}
 
               <div className="pt-2 flex flex-wrap items-center justify-end gap-3">
                 <button

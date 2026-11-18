@@ -1,6 +1,6 @@
 # Robots.txt — Cabinet Médical de Cardiologie Paris 16
 # Dr Annick TCHAM · Douala (Bonapriso), Cameroun
-# https://cabinetm-dicaldecardiologieparis-16.vercel.app
+# https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app
 
 User-agent: *
 Allow: /
@@ -35,4 +35,4 @@ User-agent: Bingbot
 Allow: /
 
 # XML Sitemap
-Sitemap: https://cabinetm-dicaldecardiologieparis-16.vercel.app/sitemap.xml
+Sitemap: https://cabinetm-dicaldecardiologieparis-16-sigma.vercel.app/sitemap.xml

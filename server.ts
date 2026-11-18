@@ -266,75 +266,24 @@ app.use(express.json({ limit: '2mb' }));
 // Trigger background Sanity sync
 syncWithSanityOnBoot();
 
-// Technical SEO: /robots.txt for Google, Bing, and WhatsApp crawlers
+// Technical SEO: /robots.txt for Google, Bing, and Search Engine crawlers
 app.get('/robots.txt', (_req: Request, res: Response) => {
-  const appUrl =
-    process.env.APP_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cabinetm-dicaldecardiologieparis-16.vercel.app');
-  res.type('text/plain').send(
-    [
-      'User-agent: *',
-      'Allow: /',
-      'Disallow: /api/admin/',
-      `Sitemap: ${appUrl.replace(/\/$/, '')}/sitemap.xml`,
-    ].join('\n')
-  );
+  const robotsPath = path.resolve(process.cwd(), 'public', 'robots.txt');
+  if (fs.existsSync(robotsPath)) {
+    res.type('text/plain').sendFile(robotsPath);
+  } else {
+    res.type('text/plain').send('User-agent: *\nAllow: /\nDisallow: /api/admin/\nSitemap: https://cabinetm-dicaldecardiologieparis-16.vercel.app/sitemap.xml\n');
+  }
 });
 
 // Technical SEO: /sitemap.xml covering Douala (Bonapriso) & Cameroon Cardiology Sections
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
-  const baseUrl = (
-    process.env.APP_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://cabinetm-dicaldecardiologieparis-16.vercel.app')
-  ).replace(/\/$/, '');
-  const now = new Date().toISOString().split('T')[0];
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>${baseUrl}/</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/?section=about</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/?section=pathologies</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/?section=explorations</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/?section=insights</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/?section=testimonials</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/?section=contact</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-</urlset>`;
-  res.header('Content-Type', 'application/xml').send(xml);
+  const sitemapPath = path.resolve(process.cwd(), 'public', 'sitemap.xml');
+  if (fs.existsSync(sitemapPath)) {
+    res.type('application/xml').sendFile(sitemapPath);
+  } else {
+    res.status(404).end();
+  }
 });
 
 // Public Endpoint: Get all site content & live testimonials (with live Sanity sync)

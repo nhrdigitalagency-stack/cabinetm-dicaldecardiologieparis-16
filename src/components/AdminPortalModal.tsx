@@ -387,10 +387,6 @@ export const AdminPortalModal: React.FC<AdminPortalModalProps> = ({
               Pré-remplir
             </button>
           </div>
-            >
-              Remplir
-            </button>
-          </div>
         </div>
       ) : (
         <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl border border-[#0052CC]/30 overflow-hidden flex flex-col max-h-[90vh]">

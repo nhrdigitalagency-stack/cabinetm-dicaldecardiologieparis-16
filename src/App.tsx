@@ -61,9 +61,63 @@ type PageView =
   | 'testimonials'
   | 'contact';
 
+export const PAGE_PATHS: Record<PageView, string> = {
+  home: '/accueil',
+  about: '/a-propos',
+  pathologies: '/pathologies',
+  explorations: '/explorations',
+  insights: '/actualites-sante',
+  testimonials: '/avis-patients',
+  contact: '/contact',
+};
+
+export const PATH_TO_PAGE_MAP: Record<string, PageView> = {
+  '/': 'home',
+  '/accueil': 'home',
+  '/home': 'home',
+  '/a-propos': 'about',
+  '/about': 'about',
+  '/dr-annick-tcham': 'about',
+  '/pathologies': 'pathologies',
+  '/maladies': 'pathologies',
+  '/maladies-du-coeur': 'pathologies',
+  '/maladies-cardiovasculaires': 'pathologies',
+  '/explorations': 'explorations',
+  '/examens': 'explorations',
+  '/examens-cardiologiques': 'explorations',
+  '/actualites-sante': 'insights',
+  '/actualites': 'insights',
+  '/insights': 'insights',
+  '/blog': 'insights',
+  '/avis-patients': 'testimonials',
+  '/avis': 'testimonials',
+  '/testimonials': 'testimonials',
+  '/contact': 'contact',
+  '/rendez-vous': 'contact',
+  '/plan-contact': 'contact',
+};
+
+export function getPathForPage(page: PageView): string {
+  return PAGE_PATHS[page] || '/accueil';
+}
+
+export function getPageFromLocation(): PageView {
+  if (typeof window === 'undefined') return 'home';
+  const pathname = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
+  if (PATH_TO_PAGE_MAP[pathname]) {
+    return PATH_TO_PAGE_MAP[pathname];
+  }
+  const params = new URLSearchParams(window.location.search);
+  const sec = params.get('section') as PageView | null;
+  if (sec && PAGE_PATHS[sec]) {
+    return sec;
+  }
+  return 'home';
+}
+
 export default function App() {
   const [lang, setLang] = useState<Language>('fr');
-  const [activePage, setActivePage] = useState<PageView>('home');
+  const [activePage, setActivePage] = useState<PageView>(() => getPageFromLocation());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSplashLoading, setIsSplashLoading] = useState(true);
 
@@ -97,23 +151,23 @@ export default function App() {
   const [selectedClinicalItem, setSelectedClinicalItem] = useState<SelectedClinicalItem>(null);
   const [copiedFooterField, setCopiedFooterField] = useState<string | null>(null);
 
+  // Handle URL Sync, Browser Back/Forward (popstate) & Direct Navigation
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const sec = params.get('section') as PageView | null;
-    if (
-      sec &&
-      [
-        'home',
-        'about',
-        'explorations',
-        'pathologies',
-        'insights',
-        'testimonials',
-        'contact',
-      ].includes(sec)
-    ) {
-      setActivePage(sec);
+    // If user opened "/" or an alias or query string, sync URL cleanly to /accueil or target route
+    const currentTarget = getPathForPage(activePage);
+    if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
+      if (currentPath === '/' || currentPath === '/home' || !PATH_TO_PAGE_MAP[currentPath]) {
+        window.history.replaceState({ page: activePage }, '', currentTarget);
+      }
     }
+
+    const handlePopState = () => {
+      const page = getPageFromLocation();
+      setActivePage(page);
+    };
+
+    window.addEventListener('popstate', handlePopState);
 
     let mounted = true;
     const loadSiteData = async () => {
@@ -157,44 +211,157 @@ export default function App() {
     loadSiteData();
     return () => {
       mounted = false;
+      window.removeEventListener('popstate', handlePopState);
     };
-  }, []);
+  }, [activePage]);
 
   // Dynamic Local & National SEO (Douala, Bonapriso & Cameroun) per Page & Language
   useEffect(() => {
-    const seoTitles: Record<PageView, { fr: string; en: string }> = {
+    const seoData: Record<
+      PageView,
+      {
+        title: { fr: string; en: string };
+        description: { fr: string; en: string };
+        keywords: { fr: string; en: string };
+      }
+    > = {
       home: {
-        fr: 'Cardiologue à Douala (Bonapriso) & Cameroun | Cabinet Médical de Cardiologie Paris 16 — Dr Annick TCHAM',
-        en: 'Cardiologist in Douala (Bonapriso) & Cameroon | Paris 16 Cardiology Clinic — Dr Annick TCHAM',
+        title: {
+          fr: 'Cardiologue à Douala (Bonapriso) & Cameroun | Cabinet Médical de Cardiologie Paris 16 — Dr Annick TCHAM',
+          en: 'Cardiologist in Douala (Bonapriso) & Cameroon | Paris 16 Cardiology Clinic — Dr Annick TCHAM',
+        },
+        description: {
+          fr: 'Cabinet de cardiologie à Douala Bonapriso dirigé par le Dr Annick TCHAM. Consultations, ECG, Échocardiographie Doppler, Holter, MAPA et apnée du sommeil sur place le même jour (+237 693 44 78 10).',
+          en: 'Cardiology clinic in Douala Bonapriso led by Dr Annick TCHAM. Consultations, ECG, Doppler Echo, Holter, ABPM and sleep apnea tests on-site (+237 693 44 78 10).',
+        },
+        keywords: {
+          fr: 'cardiologue Douala, cardiologue Bonapriso, cardiologue Cameroun, Dr Annick TCHAM, Cabinet Médical de Cardiologie Paris 16, échocardiographie Doppler Douala, ECG Douala, Holter ECG Cameroun, MAPA Douala, apnée du sommeil Cameroun',
+          en: 'cardiologist Douala, cardiologist Cameroon, Dr Annick TCHAM, Paris 16 cardiology, echocardiography Douala, Holter ECG Cameroon, ABPM Douala, sleep apnea Cameroon',
+        },
       },
       about: {
-        fr: 'Dr Annick TCHAM · Cardiologue à Douala Bonapriso, Cameroun | Cabinet Cardiologie Paris 16',
-        en: 'Dr Annick TCHAM · Cardiologist in Douala Bonapriso, Cameroon | Paris 16 Cardiology',
+        title: {
+          fr: 'Dr Annick TCHAM · Cardiologue à Douala Bonapriso, Cameroun | Cabinet Médical de Cardiologie Paris 16',
+          en: 'Dr Annick TCHAM · Cardiologist in Douala Bonapriso, Cameroon | Paris 16 Cardiology Clinic',
+        },
+        description: {
+          fr: 'Découvrez le parcours d’excellence du Dr Annick TCHAM, médecin cardiologue à Douala Bonapriso. Spécialiste des pathologies cardiovasculaires formé en France et au Cameroun.',
+          en: 'Discover Dr Annick TCHAM, expert cardiologist in Douala Bonapriso. Specialized in cardiovascular diseases with medical excellence from France and Cameroon.',
+        },
+        keywords: {
+          fr: 'Dr Annick TCHAM, médecin cardiologue Douala, cardiologue femme Cameroun, parcours cardiologue Paris Douala, consultation cardiologie Bonapriso',
+          en: 'Dr Annick TCHAM, cardiologist Douala, medical doctor Cameroon, Bonapriso cardiology clinic',
+        },
       },
       pathologies: {
-        fr: 'Spécialités Cardiologiques à Douala & Cameroun : HTA, Arythmie, AVC, Apnée | Dr Annick TCHAM',
-        en: 'Cardiology Specialties in Douala & Cameroon: Hypertension, Arrhythmia, Stroke, Sleep Apnea',
+        title: {
+          fr: 'Spécialités Cardiologiques à Douala & Cameroun : HTA, Arythmie, AVC, Insuffisance Cardiaque | Dr Annick TCHAM',
+          en: 'Cardiology Specialties in Douala & Cameroon: Hypertension, Arrhythmia, Stroke, Heart Failure | Dr Annick TCHAM',
+        },
+        description: {
+          fr: 'Prise en charge spécialisée à Douala : hypertension artérielle (HTA), troubles du rythme, palpitations, insuffisance cardiaque, prévention AVC et apnée du sommeil.',
+          en: 'Specialized care in Douala: hypertension, arrhythmias, heart palpitations, heart failure, stroke prevention and obstructive sleep apnea.',
+        },
+        keywords: {
+          fr: 'hypertension artérielle Douala, HTA Cameroun, arythmie cardiaque Douala, insuffisance cardiaque Cameroun, prévention AVC Douala, apnée du sommeil Bonapriso',
+          en: 'hypertension Douala, heart arrhythmia Cameroon, stroke prevention Douala, heart failure care Cameroon',
+        },
       },
       explorations: {
-        fr: 'ECG, Échocardiographie Doppler, Holter, MAPA & Apnée du Sommeil à Douala (Bonapriso) | Cameroun',
-        en: 'ECG, Doppler Echocardiography, Holter, ABPM & Sleep Apnea in Douala (Bonapriso) | Cameroon',
+        title: {
+          fr: 'ECG, Échocardiographie Doppler, Holter, MAPA & Apnée du Sommeil à Douala (Bonapriso) | Cameroun',
+          en: 'ECG, Doppler Echocardiography, Holter, ABPM & Sleep Apnea in Douala (Bonapriso) | Cameroon',
+        },
+        description: {
+          fr: 'Plateau technique moderne à Bonapriso Douala : Échocardiographie Doppler couleur, Holter ECG 24h-72h, Holter tensionnel MAPA, Polygraphie du sommeil et Épreuve d’effort.',
+          en: 'Modern cardiology equipment in Bonapriso Douala: Color Doppler echocardiography, 24-72h Holter ECG, ABPM blood pressure monitor, sleep apnea polygraphy, and stress test.',
+        },
+        keywords: {
+          fr: 'échocardiographie Doppler Douala, Holter ECG 24h Cameroun, MAPA tensionnel Douala, épreuve d effort Bonapriso, polygraphie ventilatoire Douala, dépistage apnée du sommeil Cameroun',
+          en: 'Doppler echo Douala, Holter ECG Cameroon, ABPM Douala, exercise stress test Douala, sleep apnea test Cameroon',
+        },
       },
       insights: {
-        fr: 'Cardiology Insights · Blog Santé du Cœur, HTA, Apnée du Sommeil & Prévention à Douala & Cameroun | Dr Annick TCHAM',
-        en: 'Cardiology Insights · Heart Health Tips, Hypertension, Sleep Apnea & Prevention Blog in Douala & Cameroon | Dr Annick TCHAM',
+        title: {
+          fr: 'Cardiology Insights · Blog Santé du Cœur, HTA & Prévention Cardiovasculaire à Douala | Dr Annick TCHAM',
+          en: 'Cardiology Insights · Heart Health, Blood Pressure & Prevention Blog in Douala | Dr Annick TCHAM',
+        },
+        description: {
+          fr: 'Conseils pratiques et articles médicaux rédigés par le Dr Annick TCHAM : maîtriser son HTA, alimentation du cœur, reconnaître les signes d’alerte cardiaque au Cameroun.',
+          en: 'Cardiology articles and medical tips by Dr Annick TCHAM: managing hypertension, healthy heart diet, and warning signs of cardiovascular issues in Cameroon.',
+        },
+        keywords: {
+          fr: 'blog cardiologie Douala, conseils tension artérielle Cameroun, prévention infarctus Douala, alimentation cœur Cameroun, Dr Annick TCHAM blog',
+          en: 'cardiology blog Douala, blood pressure advice Cameroon, heart health tips Douala',
+        },
       },
       testimonials: {
-        fr: 'Avis Patients Cardiologue Douala & Cameroun | Cabinet Médical de Cardiologie Paris 16',
-        en: 'Patient Reviews Cardiologist Douala & Cameroon | Paris 16 Cardiology Clinic',
+        title: {
+          fr: 'Avis Patients & Témoignages Cardiologue Douala | Cabinet Médical de Cardiologie Paris 16',
+          en: 'Patient Reviews & Testimonials Cardiologist Douala | Paris 16 Cardiology Clinic',
+        },
+        description: {
+          fr: 'Consultez les retours d’expérience et avis vérifiés des patients suivis par le Dr Annick TCHAM au Cabinet Médical de Cardiologie Paris 16 à Bonapriso, Douala.',
+          en: 'Read authentic patient reviews and feedback for Dr Annick TCHAM at Paris 16 Cardiology Clinic in Douala Bonapriso (Cameroon).',
+        },
+        keywords: {
+          fr: 'avis cardiologue Douala, témoignages Dr Annick TCHAM, meilleur cardiologue Bonapriso, avis Cabinet Cardiologie Paris 16',
+          en: 'cardiologist reviews Douala, patient testimonials Cameroon, Dr Annick TCHAM reviews',
+        },
       },
       contact: {
-        fr: 'Plan d’Accès Bonapriso Douala & Rendez-vous Cardiologue Cameroun (+237 693 44 78 10)',
-        en: 'Bonapriso Douala Map & Cardiologist Appointment Cameroon (+237 693 44 78 10)',
+        title: {
+          fr: 'Plan d’Accès Bonapriso Douala & Rendez-vous Cardiologue Cameroun (+237 693 44 78 10)',
+          en: 'Bonapriso Douala Map & Cardiologist Appointment Cameroon (+237 693 44 78 10)',
+        },
+        description: {
+          fr: 'Cabinet de cardiologie situé fin rue pavée de l’École publique de Bonapriso, Douala. Contact direct WhatsApp/Tél : +237 693 44 78 10. Prise de rendez-vous en ligne.',
+          en: 'Cardiology clinic located in Bonapriso, Douala. Direct contact WhatsApp/Phone: +237 693 44 78 10. Online booking and emergency consultations.',
+        },
+        keywords: {
+          fr: 'adresse cardiologue Douala, plan Bonapriso cardiologie, numéro cardiologue Cameroun, rendez-vous Dr Annick TCHAM, urgence cardiologique Douala',
+          en: 'cardiologist address Douala, Bonapriso cardiology clinic map, cardiologist phone Cameroon',
+        },
       },
     };
 
-    document.title = seoTitles[activePage][lang];
+    const currentSeo = seoData[activePage];
+    const pageTitle = currentSeo.title[lang];
+    const pageDesc = currentSeo.description[lang];
+    const pageKeywords = currentSeo.keywords[lang];
+    const canonicalUrl = `https://cabinetm-dicaldecardiologieparis-16.vercel.app${getPathForPage(activePage)}`;
+
+    document.title = pageTitle;
     document.documentElement.lang = lang === 'fr' ? 'fr-CM' : 'en';
+
+    const updateOrCreateMeta = (selector: string, attr: string, value: string) => {
+      let el = document.querySelector(selector) as HTMLMetaElement | null;
+      if (!el) {
+        el = document.createElement('meta');
+        if (selector.startsWith('meta[name=')) {
+          const name = selector.match(/meta\[name="([^"]+)"\]/)?.[1];
+          if (name) el.name = name;
+        } else if (selector.startsWith('meta[property=')) {
+          const prop = selector.match(/meta\[property="([^"]+)"\]/)?.[1];
+          if (prop) el.setAttribute('property', prop);
+        }
+        document.head.appendChild(el);
+      }
+      el.setAttribute(attr, value);
+    };
+
+    updateOrCreateMeta('meta[name="description"]', 'content', pageDesc);
+    updateOrCreateMeta('meta[name="keywords"]', 'content', pageKeywords);
+    updateOrCreateMeta('meta[property="og:title"]', 'content', pageTitle);
+    updateOrCreateMeta('meta[property="og:description"]', 'content', pageDesc);
+    updateOrCreateMeta('meta[property="og:url"]', 'content', canonicalUrl);
+    updateOrCreateMeta('meta[name="twitter:title"]', 'content', pageTitle);
+    updateOrCreateMeta('meta[name="twitter:description"]', 'content', pageDesc);
+
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (canonicalLink) {
+      canonicalLink.href = canonicalUrl;
+    }
   }, [activePage, lang]);
 
   const openBookingWithSubject = (subject = '') => {
@@ -202,9 +369,16 @@ export default function App() {
     setAppointmentModalOpen(true);
   };
 
-  const navigateToPage = (page: PageView) => {
+  const navigateToPage = (page: PageView, pushHistory = true) => {
     setActivePage(page);
     setMobileMenuOpen(false);
+    const targetPath = getPathForPage(page);
+    if (pushHistory && typeof window !== 'undefined') {
+      const currentPath = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
+      if (currentPath !== targetPath) {
+        window.history.pushState({ page }, '', targetPath);
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -336,7 +510,6 @@ export default function App() {
 
   const handleSplashComplete = () => {
     setIsSplashLoading(false);
-    setActivePage('home');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -375,10 +548,14 @@ export default function App() {
         <div className="sticky top-2 sm:top-3 z-50 w-full px-2 sm:px-4 lg:px-4 xl:px-8">
           <header className="max-w-7xl mx-auto bg-white/92 backdrop-blur-xl rounded-2xl sm:rounded-full border border-slate-200/90 shadow-[0_8px_28px_-10px_rgba(15,23,42,0.1)] px-2.5 sm:px-4 lg:px-4 xl:px-6 min-h-[60px] sm:min-h-[68px] lg:min-h-[72px] xl:min-h-20 py-1.5 flex items-center justify-between gap-1.5 sm:gap-3 lg:gap-2 xl:gap-4 transition-all">
             {/* Zone 1: Brand Wordmark + Official Logo — >= 48x48px Accessible Touch Target */}
-            <button
-              type="button"
-              onClick={() => navigateToPage('home')}
+            <a
+              href="/accueil"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateToPage('home');
+              }}
               className="min-h-[48px] min-w-[48px] py-1 px-1 rounded-xl flex items-center gap-1.5 sm:gap-2.5 text-left shrink cursor-pointer group"
+              title={lang === 'fr' ? 'Cabinet Médical de Cardiologie Paris 16 — Accueil' : 'Paris 16 Cardiology Clinic — Home'}
             >
               <img
                 src={siteData.logoUrl}
@@ -394,7 +571,7 @@ export default function App() {
                   Cardiologie <span className="text-[#0052CC]">Paris 16</span>
                 </span>
               </div>
-            </button>
+            </a>
 
             {/* Zone 2: Laptop (1024px–1279px) & Desktop (1280px+) Single-Line Navigation — >= 48x48px Touch Targets */}
             <nav
@@ -404,10 +581,13 @@ export default function App() {
               {navItems.map((item) => {
                 const isActive = activePage === item.id;
                 return (
-                  <button
+                  <a
                     key={item.id}
-                    type="button"
-                    onClick={() => navigateToPage(item.id)}
+                    href={getPathForPage(item.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateToPage(item.id);
+                    }}
                     className={`min-h-[48px] min-w-[48px] inline-flex items-center justify-center px-2.5 xl:px-3.5 py-2 rounded-full whitespace-nowrap shrink-0 transition-all cursor-pointer nav-link-underline ${
                       isActive
                         ? 'bg-[#EBF3FC] text-[#0052CC] font-extrabold nav-link-active'
@@ -417,7 +597,7 @@ export default function App() {
                     {/* Concise label on standard 1024px-1279px laptops so it never overflows; full label on 1280px+ */}
                     <span className="xl:hidden">{item.shortLabel[lang]}</span>
                     <span className="hidden xl:inline">{item.label[lang]}</span>
-                  </button>
+                  </a>
                 );
               })}
             </nav>
@@ -526,10 +706,13 @@ export default function App() {
                   {navItems.map((item) => {
                     const isActive = activePage === item.id;
                     return (
-                      <button
+                      <a
                         key={item.id}
-                        type="button"
-                        onClick={() => navigateToPage(item.id)}
+                        href={getPathForPage(item.id)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigateToPage(item.id);
+                        }}
                         className={`min-h-[48px] min-w-[48px] w-full text-left px-4 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-between transition-colors cursor-pointer ${
                           isActive
                             ? 'bg-[#0052CC] text-white shadow-xs'
@@ -542,7 +725,7 @@ export default function App() {
                             isActive ? 'text-white' : 'text-slate-400'
                           }`}
                         />
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
@@ -624,13 +807,16 @@ export default function App() {
                   </p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => navigateToPage('home')}
+                  <a
+                    href="/accueil"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateToPage('home');
+                    }}
                     className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
                   >
                     {lang === 'fr' ? '← Accueil' : '← Home'}
-                  </button>
+                  </a>
                   <button
                     type="button"
                     onClick={() => openBookingWithSubject()}
@@ -723,9 +909,12 @@ export default function App() {
                       <ArrowRight className="w-4 h-4 shrink-0" />
                     </button>
 
-                    <button
-                      type="button"
-                      onClick={() => navigateToPage('explorations')}
+                    <a
+                      href="/explorations"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigateToPage('explorations');
+                      }}
                       className="w-full sm:w-auto px-6 py-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/25 text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 btn-hover-lift hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                     >
                       <Stethoscope className="w-4 h-4 text-sky-300 shrink-0" />
@@ -734,7 +923,7 @@ export default function App() {
                           ? '8 Explorations Sur Place'
                           : '8 On-Site Explorations'}
                       </span>
-                    </button>
+                    </a>
                   </div>
 
                   {/* Direct Phone & Address Bar */}
@@ -1542,16 +1731,19 @@ export default function App() {
                     : 'Our Advanced Medical Devices & Prevention Insights'}
                 </h2>
               </div>
-              <button
-                type="button"
-                onClick={() => navigateToPage('explorations')}
+              <a
+                href="/explorations"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateToPage('explorations');
+                }}
                 className="px-4 py-2.5 rounded-full bg-white border border-slate-200 hover:border-[#0052CC] text-xs font-bold text-[#0F172A] flex items-center gap-2 self-start cursor-pointer transition-colors"
               >
                 <span>
                   {lang === 'fr' ? 'Voir les 8 explorations' : 'View All 8 Explorations'}
                 </span>
                 <ArrowRight className="w-4 h-4 text-[#0052CC]" />
-              </button>
+              </a>
             </div>
 
             {/* Equipment Showcase Grid — Clean White Cards + Real Medical Device Photographs */}
@@ -1754,9 +1946,12 @@ export default function App() {
                       {lang === 'fr' ? 'Prendre Rendez-vous' : 'Book an Appointment'}
                     </span>
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => navigateToPage('insights')}
+                  <a
+                    href="/actualites-sante"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateToPage('insights');
+                    }}
                     className="px-5 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0F172A] text-xs font-extrabold flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <span>
@@ -1765,7 +1960,7 @@ export default function App() {
                         : 'Read Cardiology Insights Blog'}
                     </span>
                     <ArrowRight className="w-4 h-4 text-[#0052CC]" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -2297,13 +2492,16 @@ export default function App() {
               <ul className="space-y-1 text-xs text-slate-300">
                 {navItems.map((item) => (
                   <li key={item.id}>
-                    <button
-                      type="button"
-                      onClick={() => navigateToPage(item.id)}
+                    <a
+                      href={getPathForPage(item.id)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigateToPage(item.id);
+                      }}
                       className="min-h-[48px] min-w-[48px] w-full sm:w-auto px-2 -mx-2 rounded-xl inline-flex items-center text-left hover:bg-slate-800/60 hover:text-white nav-link-underline transition-colors cursor-pointer"
                     >
                       {item.label[lang]}
-                    </button>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -2317,13 +2515,17 @@ export default function App() {
               <ul className="space-y-1 text-xs text-slate-300">
                 {siteData.explorations.slice(0, 6).map((exp) => (
                   <li key={exp.id}>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedClinicalItem({ kind: 'exploration', item: exp })}
+                    <a
+                      href="/explorations"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigateToPage('explorations');
+                        setSelectedClinicalItem({ kind: 'exploration', item: exp });
+                      }}
                       className="min-h-[48px] min-w-[48px] w-full sm:w-auto px-2 -mx-2 rounded-xl inline-flex items-center text-left hover:bg-slate-800/60 hover:text-white nav-link-underline transition-colors cursor-pointer"
                     >
                       {exp.title[lang]}
-                    </button>
+                    </a>
                   </li>
                 ))}
               </ul>

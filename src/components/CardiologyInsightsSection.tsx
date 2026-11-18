@@ -357,16 +357,19 @@ export const CardiologyInsightsSection: React.FC<CardiologyInsightsSectionProps>
                             ? 'Services & Examens du Cabinet Associés :'
                             : 'Related Clinic Services & Explorations:'}
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => onNavigateToSection('explorations')}
+                        <a
+                          href="/explorations"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onNavigateToSection('explorations');
+                          }}
                           className="text-[11px] font-semibold text-[#0052CC] hover:underline flex items-center gap-1 cursor-pointer"
                         >
                           <span>
                             {lang === 'fr' ? 'Tous les examens' : 'All explorations'}
                           </span>
                           <ExternalLink className="w-3 h-3" />
-                        </button>
+                        </a>
                       </div>
 
                       {/* Linked Explorations Buttons */}

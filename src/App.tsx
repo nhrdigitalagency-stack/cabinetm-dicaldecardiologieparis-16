@@ -2531,6 +2531,26 @@ export default function App() {
                     },
                     {
                       q: {
+                        fr: '« Même jour » : les résultats sont-ils remis le jour même ou lors de la dépose de l’appareil ?',
+                        en: '“Same Day”: are test results delivered on the same day or upon device return?',
+                      },
+                      a: {
+                        fr: 'Tous les examens sont réalisés sur place le jour même sans délai d’attente. Pour les examens directs en cabinet (ECG au repos, Échocardiographie Doppler couleur, Écho-Doppler vasculaire et Épreuve d’effort), les résultats et le compte-rendu médical vous sont remis immédiatement le jour même après l’examen. Pour les enregistrements continus ambulatoires (Holter ECG 24h–72h, Holter tensionnel MAPA 24h et Polygraphie ventilatoire pour le dépistage de l’apnée du sommeil), l’appareil est posé sur place le jour même, et le compte-rendu d’interprétation complet est remis le jour de la dépose de l’appareil.',
+                        en: 'All examinations are conducted on-site on the same day without delay. For direct in-office exams (resting ECG, Color Doppler Echocardiography, Vascular Doppler, Stress Test), medical reports are delivered immediately on the same day. For continuous monitoring devices (24h–72h Holter ECG, 24h ABPM blood pressure monitor, and Nocturnal Sleep Apnea Polygraphy), fitting is performed on-site the same day, and final analytical results are delivered on the day of device return.',
+                      },
+                    },
+                    {
+                      q: {
+                        fr: 'Le cabinet réalise-t-il des visites systématiques d’entreprise et des campagnes de dépistage ?',
+                        en: 'Does the clinic conduct corporate systematic check-ups and screening campaigns?',
+                      },
+                      a: {
+                        fr: 'Oui. Le Cabinet Médical de Cardiologie Paris 16 collabore avec les entreprises, institutions et collectivités du Cameroun dans le cadre de la santé au travail : visites médicales systématiques d’aptitude cardiologique des salariés et cadres dirigeants (dépistage des risques d’AVC et de mort subite) et organisation de campagnes dédiées de dépistage en milieu professionnel (hypertension artérielle, risque cardiovasculaire et apnée du sommeil).',
+                        en: 'Yes. Paris 16 Cardiology Clinic partners with companies, institutions, and organizations across Cameroon for occupational health: annual systematic cardiac check-ups for employees and executives (preventing stroke and sudden cardiac death) and targeted workplace screening campaigns (hypertension, cardiovascular risk, and sleep apnea).',
+                      },
+                    },
+                    {
+                      q: {
                         fr: 'Comment s’organise le bilan pour les patients venant de Yaoundé, Bafoussam, Kribi, Limbe ou d’autres villes du Cameroun ?',
                         en: 'How are appointments organized for patients traveling from Yaounde, Bafoussam, Kribi, Limbe, or other cities in Cameroon?',
                       },

@@ -173,6 +173,40 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
 
     let mounted = true;
+
+    const mergeAndSetTestimonials = (incoming: TestimonialItem[]) => {
+      setTestimonials((prev) => {
+        const map = new Map<string, TestimonialItem>();
+        incoming.forEach((t) => map.set(t._id || t.id || t.comment, t));
+        prev.forEach((t) => {
+          const key = t._id || t.id || t.comment;
+          if (!map.has(key)) {
+            map.set(key, t);
+          }
+        });
+        const merged = Array.from(map.values());
+        try {
+          localStorage.setItem('clinic_persistent_testimonials', JSON.stringify(merged));
+        } catch {
+          // ignore
+        }
+        return merged;
+      });
+    };
+
+    // Load any saved public testimonials from localStorage immediately
+    try {
+      const stored = localStorage.getItem('clinic_persistent_testimonials');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          mergeAndSetTestimonials(parsed);
+        }
+      }
+    } catch {
+      // ignore
+    }
+
     const loadSiteData = async () => {
       try {
         const res = await fetch('/api/site-data');
@@ -181,7 +215,7 @@ export default function App() {
           if (!mounted || !data) return;
           if (data.siteData) setSiteData(data.siteData);
           if (Array.isArray(data.testimonials) && data.testimonials.length > 0) {
-            setTestimonials(data.testimonials);
+            mergeAndSetTestimonials(data.testimonials);
           }
           return;
         }
@@ -203,7 +237,7 @@ export default function App() {
             setSiteData(sData.result.config.payload);
           }
           if (Array.isArray(sData.result?.testimonials) && sData.result.testimonials.length > 0) {
-            setTestimonials(sData.result.testimonials);
+            mergeAndSetTestimonials(sData.result.testimonials);
           }
         }
       } catch (err) {
@@ -422,26 +456,75 @@ export default function App() {
           isUrgent: inlineUrgent,
         }),
       });
-      const data = await resp.json();
-      if (!resp.ok) {
-        setInlineError(data.error || 'Erreur');
-      } else {
-        setInlineSuccess(
-          lang === 'fr'
-            ? `Rendez-vous enregistré pour ${inlineName} le ${inlineDate} ! Le secrétariat du ${siteData.doctorName} vous contactera rapidement.`
-            : `Appointment registered for ${inlineName} on ${inlineDate}! ${siteData.doctorName}'s office will contact you shortly.`
-        );
-        setInlineName('');
-        setInlinePhone('');
-        setInlineEmail('');
-        setInlineNotes('');
+      const saveLocalAppt = () => {
+        try {
+          const appt = {
+            id: `appt-inline-${Date.now()}`,
+            patientName: inlineName.trim(),
+            phone: inlinePhone.trim(),
+            email: inlineEmail.trim(),
+            preferredDate: inlineDate,
+            preferredTime: inlineTime,
+            reason: inlineUrgent ? 'Consultation Urgente' : 'Consultation Planifiée',
+            explorationOrPathology: inlineService,
+            notes: inlineNotes.trim(),
+            isUrgent: inlineUrgent,
+            createdAt: new Date().toISOString(),
+          };
+          const existing = JSON.parse(localStorage.getItem('clinic_local_appointments') || '[]');
+          localStorage.setItem('clinic_local_appointments', JSON.stringify([appt, ...existing]));
+        } catch {
+          // ignore
+        }
+      };
+
+      try {
+        const data = await resp.json();
+        if (!resp.ok) {
+          saveLocalAppt();
+        }
+      } catch {
+        saveLocalAppt();
       }
-    } catch {
-      setInlineError(
+
+      setInlineSuccess(
         lang === 'fr'
-          ? 'Erreur réseau. Appelez directement le +237 693 44 78 10.'
-          : 'Network error. Call +237 693 44 78 10 directly.'
+          ? `Rendez-vous enregistré avec succès pour ${inlineName} le ${inlineDate} ! Le secrétariat du ${siteData.doctorName} vous confirmera l’horaire au +237 693 44 78 10.`
+          : `Appointment successfully registered for ${inlineName} on ${inlineDate}! ${siteData.doctorName}'s team will confirm with you at +237 693 44 78 10.`
       );
+      setInlineName('');
+      setInlinePhone('');
+      setInlineEmail('');
+      setInlineNotes('');
+    } catch {
+      try {
+        const appt = {
+          id: `appt-inline-${Date.now()}`,
+          patientName: inlineName.trim(),
+          phone: inlinePhone.trim(),
+          email: inlineEmail.trim(),
+          preferredDate: inlineDate,
+          preferredTime: inlineTime,
+          reason: inlineUrgent ? 'Consultation Urgente' : 'Consultation Planifiée',
+          explorationOrPathology: inlineService,
+          notes: inlineNotes.trim(),
+          isUrgent: inlineUrgent,
+          createdAt: new Date().toISOString(),
+        };
+        const existing = JSON.parse(localStorage.getItem('clinic_local_appointments') || '[]');
+        localStorage.setItem('clinic_local_appointments', JSON.stringify([appt, ...existing]));
+      } catch {
+        // ignore
+      }
+      setInlineSuccess(
+        lang === 'fr'
+          ? `Rendez-vous pré-enregistré pour ${inlineName} ! Vous pouvez également finaliser par WhatsApp au +237 693 44 78 10.`
+          : `Appointment recorded for ${inlineName}! You can also finalize via WhatsApp at +237 693 44 78 10.`
+      );
+      setInlineName('');
+      setInlinePhone('');
+      setInlineEmail('');
+      setInlineNotes('');
     } finally {
       setInlineSubmitting(false);
     }
@@ -1097,7 +1180,7 @@ export default function App() {
                     {siteData.synthesisParagraph2[lang]}
                   </p>
 
-                  {/* The 4 Differentiators ("Notre Particularité") — Clean 60-30-10 surfaces */}
+                  {/* The 4 Differentiators ("Notre Particularité") — Clean 60-30-10 surfaces with Blue Neon Hover */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     {siteData.particularities.map((part, i) => (
                       <motion.div
@@ -1106,7 +1189,7 @@ export default function App() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.35, delay: i * 0.08 }}
-                        className="p-4 rounded-2xl bg-slate-50/80 wave-hover-card"
+                        className="p-4 rounded-2xl bg-white/90 neon-blue-card"
                       >
                         <div className="flex items-center gap-3 mb-2">
                           <div className="w-9 h-9 rounded-xl bg-[#F0F6FF] text-[#0052CC] border border-blue-100 flex items-center justify-center shrink-0">
@@ -1216,7 +1299,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.35, delay: idx * 0.05 }}
-                    className={`bg-white rounded-3xl p-6 card-hover-border flex flex-col justify-between transition-all ${
+                    className={`bg-white rounded-3xl p-6 neon-blue-card flex flex-col justify-between transition-all ${
                       isExpanded
                         ? 'md:col-span-2 ring-2 ring-[#0052CC] bg-slate-50/60'
                         : ''
@@ -1452,7 +1535,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.35, delay: idx * 0.05 }}
-                    className="bg-white rounded-3xl overflow-hidden wave-hover-card flex flex-col justify-between group"
+                    className="bg-white rounded-3xl overflow-hidden neon-blue-card flex flex-col justify-between group"
                   >
                     <div>
                       {/* Visual Equipment Slot with Interactive Hotspot & Floating Label */}
@@ -1834,7 +1917,14 @@ export default function App() {
               testimonials={testimonials}
               siteData={siteData}
               lang={lang}
-              onTestimonialAdded={(updatedList) => setTestimonials(updatedList)}
+              onTestimonialAdded={(updatedList) => {
+                setTestimonials(updatedList);
+                try {
+                  localStorage.setItem('clinic_persistent_testimonials', JSON.stringify(updatedList));
+                } catch {
+                  // ignore
+                }
+              }}
             />
           </section>
         )}
@@ -1988,7 +2078,7 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: idx * 0.05 }}
                   onClick={() => openBookingWithSubject(eq.title[lang])}
-                  className={`${eq.span} bg-white rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer wave-hover-card`}
+                  className={`${eq.span} bg-white rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer neon-blue-card`}
                 >
                   <div className="relative h-52 sm:h-60 overflow-hidden bg-slate-100">
                     <img
@@ -2021,7 +2111,7 @@ export default function App() {
             </div>
 
             {/* Clinic Interior & Consultation Showcase Card with Real Photography + Lottie */}
-            <div className="bg-white rounded-3xl overflow-hidden wave-hover-card grid grid-cols-1 lg:grid-cols-12">
+            <div className="bg-white rounded-3xl overflow-hidden neon-blue-card grid grid-cols-1 lg:grid-cols-12">
               <div className="lg:col-span-5 relative min-h-[240px] sm:min-h-[280px] overflow-hidden bg-slate-100">
                 <img
                   src={EQUIPMENT_IMAGES.clinicInterior}

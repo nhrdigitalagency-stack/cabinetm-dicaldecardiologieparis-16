@@ -109,7 +109,13 @@ export const AdminPortalModal: React.FC<AdminPortalModalProps> = ({
           const mockToken = 'auth-session-' + Date.now();
           setToken(mockToken);
           setDraftData(siteData);
-          setAppointments([]);
+          let localAppts = [];
+          try {
+            localAppts = JSON.parse(localStorage.getItem('clinic_local_appointments') || '[]');
+          } catch {
+            // ignore
+          }
+          setAppointments(localAppts);
           setSanityStatus({
             projectId: 'l3036eyt',
             organizationId: 'oh314dkvd',
@@ -123,7 +129,22 @@ export const AdminPortalModal: React.FC<AdminPortalModalProps> = ({
       } else {
         setToken(data.token);
         setDraftData(data.siteData);
-        setAppointments(data.appointments || []);
+        let localAppts: AppointmentItem[] = [];
+        try {
+          localAppts = JSON.parse(localStorage.getItem('clinic_local_appointments') || '[]');
+        } catch {
+          // ignore
+        }
+        const serverAppts = Array.isArray(data.appointments) ? data.appointments : [];
+        const apptMap = new Map<string, AppointmentItem>();
+        serverAppts.forEach((a: AppointmentItem) =>
+          apptMap.set(a._id || a.id || a.patientName + a.preferredDate, a)
+        );
+        localAppts.forEach((a: AppointmentItem) => {
+          const key = a._id || a.id || a.patientName + a.preferredDate;
+          if (!apptMap.has(key)) apptMap.set(key, a);
+        });
+        setAppointments(Array.from(apptMap.values()));
         setSanityStatus(data.sanityInfo || null);
         setNewAdminUser(data.username || 'admin');
         onTestimonialsUpdated(data.testimonials || testimonials);
@@ -134,7 +155,13 @@ export const AdminPortalModal: React.FC<AdminPortalModalProps> = ({
         const mockToken = 'auth-session-' + Date.now();
         setToken(mockToken);
         setDraftData(siteData);
-        setAppointments([]);
+        let localAppts: AppointmentItem[] = [];
+        try {
+          localAppts = JSON.parse(localStorage.getItem('clinic_local_appointments') || '[]');
+        } catch {
+          // ignore
+        }
+        setAppointments(localAppts);
         setSanityStatus({
           projectId: 'l3036eyt',
           organizationId: 'oh314dkvd',
